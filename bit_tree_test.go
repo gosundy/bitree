@@ -1,12 +1,25 @@
 package bitree
 
-import "testing"
+import (
+	"testing"
+)
 
 const (
 	count = 1000000
 )
 
 func TestBitNode_Set(t *testing.T) {
+	bitmap := NewBitTree()
+	i := uint32(0)
+	for i = 0; i < count; i++ {
+		err := bitmap.Set(i)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+
+}
+func TestBitNode_SetAndGet(t *testing.T) {
 	bitmap := NewBitTree()
 	i := uint32(0)
 	for i = 0; i < count; i++ {
@@ -30,6 +43,26 @@ func TestBitNode_Set(t *testing.T) {
 			if isExists == true {
 				t.Fatalf("expect not exists, acutal exists")
 			}
+		}
+	}
+
+}
+func TestBitNode_SetAndDelete(t *testing.T) {
+	bitmap := NewBitTree()
+	i := uint32(0)
+	for i = 0; i < count; i++ {
+		err := bitmap.Set(i)
+		if err != nil {
+			t.Fatal(err)
+		}
+	}
+	for i = 0; i < count; i++ {
+		isExists, err := bitmap.Reset(i)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if isExists == false {
+			t.Fatalf("expect exists, acutal not exists")
 		}
 	}
 
